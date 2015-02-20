@@ -1,8 +1,7 @@
 /**
  * Created by OPIR on 20.2.2015 г..
  */
-
-angular.module(BattleShip)
+angular.module('BattleShip')
     .controller('MainCtrl', function mainController($rootScope, $http) {
         $rootScope.formData = 'kurec';
 
