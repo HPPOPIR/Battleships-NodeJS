@@ -5,8 +5,7 @@
 <head>
 
     <!-- SPELLS -->
-    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>&lt;!&ndash; load angular &ndash;&gt;-->
-    <script src="public/bower_components/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap.css">    <script src="public/bower_components/jquery/dist/jquery.js"></script>
     <script src="public/bower_components/angular/angular.js"></script>
     <script src="public/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="public/bower_components/angular-animate/angular-animate.js"></script>
@@ -20,11 +19,10 @@
     <script src="public/controllers/mainCtrl.js"></script>
 
 </head>
-    <body ng-controller="MainCtrl">
-        <label>
-            asd
-            {{formData}}
-        </label>
+    <body>
+        <div ng-view="">
+
+        </div>
     </body>
 
     <div class="text-center text-muted">
