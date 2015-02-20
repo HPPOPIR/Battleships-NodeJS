@@ -5,7 +5,9 @@
 <head>
 
     <!-- SPELLS -->
-    <link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap.css">    <script src="public/bower_components/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="public/css/main.css">
+    <script src="public/bower_components/jquery/dist/jquery.js"></script>
     <script src="public/bower_components/angular/angular.js"></script>
     <script src="public/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="public/bower_components/angular-animate/angular-animate.js"></script>
@@ -16,17 +18,12 @@
 
     <!--<script src="bower_components/gulp/bin/gulp.js"></script>-->
     <script src="public/app.js"></script>
-    <script src="public/controllers/mainCtrl.js"></script>
+    <script src="public/main/mainCtrl.js"></script>
 
 </head>
     <body>
-        <div ng-view="">
+        <div class="container main-container" ng-view="">
 
         </div>
     </body>
-
-    <div class="text-center text-muted">
-        <p>A demo by <a href="http://scotch.io">Scotch</a>.</p>
-        <p>Read the <a href="http://scotch.io/tutorials/javascript/creating-a-single-page-todo-app-with-node-and-angular">tutorial</a>.</p>
-    </div>
 </html>

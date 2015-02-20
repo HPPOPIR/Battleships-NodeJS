@@ -2,8 +2,8 @@
  * Created by OPIR on 20.2.2015 г..
  */
 angular.module('BattleShip')
-    .controller('MainCtrl', function mainController($rootScope, $http) {
-        $rootScope.formData = 'kurec';
+    .controller('MultiCtrl', function mainController($scope, $http) {
+        $scope.formData = 'Multi';
 
         // when landing on the page, get all todos and show them
 //    $http.get('/api/todos')
