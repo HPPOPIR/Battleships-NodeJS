@@ -6,7 +6,7 @@ module.exports = function(app) {
 
     // api ---------------------------------------------------------------------
     // get all todos
-    app.get('/api/todos', function(req, res) {
+    app.get('/api/todos', function(req, res,next) {
 
         // use mongoose to get all todos in the database
         Todo.find(function(err, todos) {
