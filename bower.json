@@ -5,7 +5,7 @@
     "authors": [
         "TodorTodorin <toti.1@abv.bg>"
     ],
-    "main": "app/app.js",
+    "main": "public/app.js",
     "license": "MIT",
     "ignore": [
         "**/.*",
