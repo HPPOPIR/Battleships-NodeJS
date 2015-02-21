@@ -78,7 +78,7 @@ button:active {
     width: auto;
     display: inline-block;
     text-align: left;
-    margin: 0 auto 3em auto;
+    margin: 0;
 }
 
 .container {
@@ -153,11 +153,11 @@ button:active {
 }
 
 .grid-container {
-    width: 430px;
+    width: 330px;
     display: inline-block;
 }
 .grid-container h2 {
-    width: 430px;
+    width: 330px;
     display: inline-block;
 }
 
@@ -165,8 +165,8 @@ button:active {
     position: relative;
     vertical-align: top;
     /*padding: 5px;*/
-    height: 420px;
-    width: 420px;
+    height: 320px;
+    width: 320px;
     background-color: #25567B;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -185,8 +185,8 @@ button:active {
 }
 .grid-cell {
     vertical-align: top; /*clears the vertical space between rows*/
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     display: inline-block;
     background-color: #99C2E1;
     margin: 1px;
