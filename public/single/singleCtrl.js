@@ -21,10 +21,12 @@ angular.module('BattleShip')
 
         $scope.shot = function (elem, y) {
             var x = elem.$parent.$index;
-            var shotCoordinates = {y: y, x: x};
+            var shotCoordinates = {coordinates:{y: y, x: x}};
             $http.post('/api/shot', shotCoordinates)
                 .success(function (response) {
-
+                    if(response == true){
+                        alert('Hit!')
+                    }
                 })
                 .error(function (err) {
                     console.log(err);
