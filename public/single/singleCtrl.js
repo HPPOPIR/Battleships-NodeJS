@@ -840,11 +840,5 @@ angular.module('BattleShip')
         function getRandom(min, max) {
             return Math.random() * (max - min) + min;
         }
-
-        function setDebug(val) {
-            DEBUG_MODE = val;
-            localStorage.setItem('DEBUG_MODE', val);
-            window.location.reload();
-        }
     }
 );
