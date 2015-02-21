@@ -1,53 +1,48 @@
 <div class="container">
-    <h1>Battleboat.js</h1>
-    <p class="tagline">An experiment to try to write the world's most challenging battleship-playing robot.</p>
-    <p>How to play</p>
+    <p>Как да играете</p>
     <ol class="instructions">
-        <li id="step1">Select your ships from the left-hand side</li>
-        <li id="step2">Place your ships on your map</li>
-        <li id="step3">Click on the cells of the enemy's map<br>
-            to find and destroy all five enemy ships</li>
-        <li id="step4">The computer will fire on your ships<br>
-            immediately after you fire on its ships.</li>
+        <li id="step1">Изберете кораб от ляво</li>
+        <li id="step2">Поставете го на игралното поле/li>
+        <li id="step3">Кликнете на поле от игралното поле на противника<br>
+            за да намерите и унищожите неговите 5 кораба</li>
+        <li id="step4">Компютъра ще отвръща на огъня<br>
+            веднага след вас.</li>
     </ol>
     <div class="game-container">
         <div id="restart-sidebar" class="hidden">
-            <h2>Try Again</h2>
-            <button id="restart-game">Restart Game</button>
+            <h2>Опитай отново</h2>
+            <button id="restart-game">Рестартирай играта</button>
         </div><div id="roster-sidebar">
-        <h2>Place Your Ships</h2>
+        <h2>Постави своите кораби</h2>
         <ul class="fleet-roster">
-            <li id="patrolboat">Patrol Boat</li>
-            <li id="submarine">Submarine</li>
-            <li id="destroyer">Destroyer</li>
-            <li id="battleship">Battleship</li>
-            <li id="carrier">Aircraft Carrier</li>
+            <li id="patrolboat">Патрулираща лодка</li>
+            <li id="submarine">Подводница</li>
+            <li id="destroyer">Унищожител</li>
+            <li id="battleship">Боен кораб</li>
+            <li id="carrier">Самолетоносач</li>
         </ul>
-        <button id="rotate-button" data-direction="0">Rotate Ship</button>
-        <button id="start-game" class="hidden">Start Game</button>
-        <button id="place-randomly" class="hidden">Place Randomly and Start</button>
+        <button id="rotate-button" data-direction="0">Завърти кораба</button>
+        <button id="start-game" class="hidden">Започни играта</button>
+        <button id="place-randomly" class="hidden">Постави на случаен принцип и започни играта</button>
     </div><div id="stats-sidebar">
-        <h2>Stats</h2>
-        <p><strong>Games Won</strong></p>
-        <p id="stats-wins">0 of 0</p>
-        <p><strong>Accuracy</strong></p>
+        <h2>Статистика</h2>
+        <p><strong>Спечелени игри</strong></p>
+        <p id="stats-wins">0 от 0</p>
+        <p><strong>Точност</strong></p>
         <p id="stats-accuracy">0%</p>
-        <button id="reset-stats">Reset Stats</button>
+        <button id="reset-stats">Рестартирайте статистиката</button>
         <button id="prob-heatmap" class="hidden">Show Probability Heatmap</button>
     </div><div class="grid-container">
-        <h2>Your Fleet</h2>
+        <h2>Вашия флот</h2>
         <div class="grid human-player"><span class="no-js">Please enable JavaScript to play this game</span></div>
     </div><div class="grid-container">
-        <h2>Enemy Fleet</h2>
+        <h2>Противниковия флот</h2>
         <div class="grid computer-player"><span class="no-js">Please enable JavaScript to play this game</span></div>
     </div>
     </div>
 
-    <p>Created by <a href="http://www.kortaggio.com">Bill Mei</a>.</p>
-    <p>This project is work-in-progress, if you find any bugs, report them <a href="https://github.com/kortaggio/battleboat">on GitHub</a>.</p>
-</div>
 
-<a href="https://github.com/Kortaggio/battleboat"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+</div>
 
 <script>
     // Don't change this variable.
