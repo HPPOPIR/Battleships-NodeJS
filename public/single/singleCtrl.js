@@ -261,7 +261,7 @@ angular.module('BattleShip')
                         var el = document.getElementById('rotate-button');
                         el.addEventListener(transitionEndEventName(), (function () {
                             el.setAttribute('class', 'hidden');
-                                document.getElementById('start-game').removeAttribute('class');
+                            document.getElementById('start-game').removeAttribute('class');
 
                         }), false);
                         el.setAttribute('class', 'invisible');
@@ -352,14 +352,6 @@ angular.module('BattleShip')
             self.resetFogOfWar();
             self.init();
         };
-// Debugging function used to place all ships and just start
-        Game.prototype.placeRandomly = function (e) {
-            e.target.removeEventListener(e.type, arguments.callee);
-            e.target.self.humanFleet.placeShipsRandomly();
-            e.target.self.readyToPlay = true;
-            document.getElementById('roster-sidebar').setAttribute('class', 'hidden');
-            this.setAttribute('class', 'hidden');
-        };
 // Ends placing the current ship
         Game.prototype.endPlacing = function (shipType) {
             document.getElementById(shipType).setAttribute('class', 'placed');
@@ -409,9 +401,7 @@ angular.module('BattleShip')
                 els[i].removeAttribute('class');
             }
 
-
-                document.getElementById('roster-sidebar').removeAttribute('class');
-
+            document.getElementById('roster-sidebar').removeAttribute('class');
             document.getElementById('rotate-button').removeAttribute('class');
             document.getElementById('start-game').setAttribute('class', 'hidden');
 //                if (DEBUG_MODE) {
@@ -504,9 +494,6 @@ angular.module('BattleShip')
             startButton.addEventListener('click', this.startGame, false);
             var resetButton = document.getElementById('reset-stats');
             resetButton.addEventListener('click', Game.stats.resetStats, false);
-            var randomButton = document.getElementById('place-randomly');
-            randomButton.self = this;
-            randomButton.addEventListener('click', this.placeRandomly, false);
             this.computerFleet.placeShipsRandomly();
         };
 
@@ -1124,8 +1111,6 @@ angular.module('BattleShip')
 
 // Start the game
         var mainGame = new Game(10);
-
-
 
 
 // Browser compatability workaround for transition end event names.
