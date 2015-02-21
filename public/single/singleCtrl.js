@@ -1,42 +1,14 @@
 /**
  * Created by OPIR on 20.2.2015 г..
  */
+
 angular.module('BattleShip')
-    .controller('SingleCtrl', function mainController($scope, $http) {
+    .controller('SingleCtrl', function mainController($scope, $http, config) {
         (function() {
 
 // Global Constants
-            var CONST = {};
-            CONST.AVAILABLE_SHIPS = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
-// You are player 0 and the computer is player 1
-// The virtual player is used for generating temporary ships
-// for calculating the probability heatmap
-            CONST.HUMAN_PLAYER = 0;
-            CONST.COMPUTER_PLAYER = 1;
-            CONST.VIRTUAL_PLAYER = 2;
-// Possible values for the parameter `type` (string)
-            CONST.CSS_TYPE_EMPTY = 'empty';
-            CONST.CSS_TYPE_SHIP = 'ship';
-            CONST.CSS_TYPE_MISS = 'miss';
-            CONST.CSS_TYPE_HIT = 'hit';
-            CONST.CSS_TYPE_SUNK = 'sunk';
-// Grid code:
-            CONST.TYPE_EMPTY = 0; // 0 = water (empty)
-            CONST.TYPE_SHIP = 1; // 1 = undamaged ship
-            CONST.TYPE_MISS = 2; // 2 = water with a cannonball in it (missed shot)
-            CONST.TYPE_HIT = 3; // 3 = damaged ship (hit shot)
-            CONST.TYPE_SUNK = 4; // 4 = sunk ship
 
-// TODO: Make this better OO code. CONST.AVAILABLE_SHIPS should be an array
-//       of objects rather than than two parallel arrays. Or, a better
-//       solution would be to store "USED" and "UNUSED" as properties of
-//       the individual ship object.
-// These numbers correspond to CONST.AVAILABLE_SHIPS
-// 0) 'carrier' 1) 'battleship' 2) 'destroyer' 3) 'submarine' 4) 'patrolboat'
-// This variable is only used when DEBUG_MODE === true.
-            Game.usedShips = [CONST.UNUSED, CONST.UNUSED, CONST.UNUSED, CONST.UNUSED, CONST.UNUSED];
-            CONST.USED = 1;
-            CONST.UNUSED = 0;
+            Game.usedShips = [config.UNUSED, config.UNUSED, config.UNUSED, config.UNUSED, config.UNUSED];
 
 // Game Statistics
             function Stats(){
@@ -163,7 +135,7 @@ angular.module('BattleShip')
             };
 
 // Game manager object
-// Constructor
+// configructor
             function Game(size) {
                 Game.size = size;
                 this.shotsTaken = 0;
@@ -195,10 +167,10 @@ angular.module('BattleShip')
             Game.prototype.shoot = function(x, y, targetPlayer) {
                 var targetGrid;
                 var targetFleet;
-                if (targetPlayer === CONST.HUMAN_PLAYER) {
+                if (targetPlayer === config.HUMAN_PLAYER) {
                     targetGrid = this.humanGrid;
                     targetFleet = this.humanFleet;
-                } else if (targetPlayer === CONST.COMPUTER_PLAYER) {
+                } else if (targetPlayer === config.COMPUTER_PLAYER) {
                     targetGrid = this.computerGrid;
                     targetFleet = this.computerFleet;
                 } else {
@@ -217,11 +189,11 @@ angular.module('BattleShip')
                     // because it overrides the CSS class to 'sunk' if we find that the ship was sunk
                     targetFleet.findShipByCoords(x, y).incrementDamage(); // increase the damage
                     this.checkIfWon();
-                    return CONST.TYPE_HIT;
+                    return config.TYPE_HIT;
                 } else {
                     targetGrid.updateCell(x, y, 'miss', targetPlayer);
                     this.checkIfWon();
-                    return CONST.TYPE_MISS;
+                    return config.TYPE_MISS;
                 }
             };
 // Creates click event listeners on each one of the 100 grid cells
@@ -232,7 +204,7 @@ angular.module('BattleShip')
                 var y = parseInt(e.target.getAttribute('data-y'), 10);
                 var result = null;
                 if (self.readyToPlay) {
-                    result = self.shoot(x, y, CONST.COMPUTER_PLAYER);
+                    result = self.shoot(x, y, config.COMPUTER_PLAYER);
 
                     // Remove the tutorial arrow
                     if (gameTutorial.showTutorial) {
@@ -242,7 +214,7 @@ angular.module('BattleShip')
 
                 if (result !== null && !Game.gameOver) {
                     Game.stats.incrementShots();
-                    if (result === CONST.TYPE_HIT) {
+                    if (result === config.TYPE_HIT) {
                         Game.stats.hitShot();
                     }
                     // The AI shoots iff the player clicks on a cell that he/she hasn't
@@ -407,7 +379,7 @@ angular.module('BattleShip')
                 document.getElementById(shipType).setAttribute('class', 'placed');
 
                 // Mark the ship as 'used'
-                Game.usedShips[CONST.AVAILABLE_SHIPS.indexOf(shipType)] = CONST.USED;
+                Game.usedShips[config.AVAILABLE_SHIPS.indexOf(shipType)] = config.USED;
 
                 // Wipe out the variable when you're done with it
                 Game.placeShipDirection = null;
@@ -435,12 +407,12 @@ angular.module('BattleShip')
             Game.prototype.resetFogOfWar = function() {
                 for (var i = 0; i < Game.size; i++) {
                     for (var j = 0; j < Game.size; j++) {
-                        this.humanGrid.updateCell(i, j, 'empty', CONST.HUMAN_PLAYER);
-                        this.computerGrid.updateCell(i, j, 'empty', CONST.COMPUTER_PLAYER);
+                        this.humanGrid.updateCell(i, j, 'empty', config.HUMAN_PLAYER);
+                        this.computerGrid.updateCell(i, j, 'empty', config.COMPUTER_PLAYER);
                     }
                 }
                 // Reset all values to indicate the ships are ready to be placed again
-                Game.usedShips = Game.usedShips.map(function(){return CONST.UNUSED;});
+                Game.usedShips = Game.usedShips.map(function(){return config.UNUSED;});
             };
 // Resets CSS styling of the sidebar
             Game.prototype.resetRosterSidebar = function() {
@@ -498,8 +470,8 @@ angular.module('BattleShip')
             Game.prototype.init = function() {
                 this.humanGrid = new Grid(Game.size);
                 this.computerGrid = new Grid(Game.size);
-                this.humanFleet = new Fleet(this.humanGrid, CONST.HUMAN_PLAYER);
-                this.computerFleet = new Fleet(this.computerGrid, CONST.COMPUTER_PLAYER);
+                this.humanFleet = new Fleet(this.humanGrid, config.HUMAN_PLAYER);
+                this.computerFleet = new Fleet(this.computerGrid, config.COMPUTER_PLAYER);
 
                 this.robot = new AI(this);
                 Game.stats = new Stats();
@@ -566,7 +538,7 @@ angular.module('BattleShip')
                     var row = [];
                     this.cells[x] = row;
                     for (var y = 0; y < this.size; y++) {
-                        row.push(CONST.TYPE_EMPTY);
+                        row.push(config.TYPE_EMPTY);
                     }
                 }
             };
@@ -574,9 +546,9 @@ angular.module('BattleShip')
 // Updates the cell's CSS class based on the type passed in
             Grid.prototype.updateCell = function(x, y, type, targetPlayer) {
                 var player;
-                if (targetPlayer === CONST.HUMAN_PLAYER) {
+                if (targetPlayer === config.HUMAN_PLAYER) {
                     player = 'human-player';
-                } else if (targetPlayer === CONST.COMPUTER_PLAYER) {
+                } else if (targetPlayer === config.COMPUTER_PLAYER) {
                     player = 'computer-player';
                 } else {
                     // Should never be called
@@ -584,23 +556,23 @@ angular.module('BattleShip')
                 }
 
                 switch (type) {
-                    case CONST.CSS_TYPE_EMPTY:
-                        this.cells[x][y] = CONST.TYPE_EMPTY;
+                    case config.CSS_TYPE_EMPTY:
+                        this.cells[x][y] = config.TYPE_EMPTY;
                         break;
-                    case CONST.CSS_TYPE_SHIP:
-                        this.cells[x][y] = CONST.TYPE_SHIP;
+                    case config.CSS_TYPE_SHIP:
+                        this.cells[x][y] = config.TYPE_SHIP;
                         break;
-                    case CONST.CSS_TYPE_MISS:
-                        this.cells[x][y] = CONST.TYPE_MISS;
+                    case config.CSS_TYPE_MISS:
+                        this.cells[x][y] = config.TYPE_MISS;
                         break;
-                    case CONST.CSS_TYPE_HIT:
-                        this.cells[x][y] = CONST.TYPE_HIT;
+                    case config.CSS_TYPE_HIT:
+                        this.cells[x][y] = config.TYPE_HIT;
                         break;
-                    case CONST.CSS_TYPE_SUNK:
-                        this.cells[x][y] = CONST.TYPE_SUNK;
+                    case config.CSS_TYPE_SUNK:
+                        this.cells[x][y] = config.TYPE_SUNK;
                         break;
                     default:
-                        this.cells[x][y] = CONST.TYPE_EMPTY;
+                        this.cells[x][y] = config.TYPE_EMPTY;
                         break;
                 }
                 var classes = ['grid-cell', 'grid-cell-' + x + '-' + y, 'grid-' + type];
@@ -609,26 +581,26 @@ angular.module('BattleShip')
 // Checks to see if a cell contains an undamaged ship
 // Returns boolean
             Grid.prototype.isUndamagedShip = function(x, y) {
-                return this.cells[x][y] === CONST.TYPE_SHIP;
+                return this.cells[x][y] === config.TYPE_SHIP;
             };
 // Checks to see if the shot was missed. This is equivalent
 // to checking if a cell contains a cannonball
 // Returns boolean
             Grid.prototype.isMiss = function(x, y) {
-                return this.cells[x][y] === CONST.TYPE_MISS;
+                return this.cells[x][y] === config.TYPE_MISS;
             };
 // Checks to see if a cell contains a damaged ship,
 // either hit or sunk.
 // Returns boolean
             Grid.prototype.isDamagedShip = function(x, y) {
-                return this.cells[x][y] === CONST.TYPE_HIT || this.cells[x][y] === CONST.TYPE_SUNK;
+                return this.cells[x][y] === config.TYPE_HIT || this.cells[x][y] === config.TYPE_SUNK;
             };
 
 // Fleet object
 // This object is used to keep track of a player's portfolio of ships
 // Constructor
             function Fleet(playerGrid, player) {
-                this.numShips = CONST.AVAILABLE_SHIPS.length;
+                this.numShips = config.AVAILABLE_SHIPS.length;
                 this.playerGrid = playerGrid;
                 this.player = player;
                 this.fleetRoster = [];
@@ -638,8 +610,8 @@ angular.module('BattleShip')
             Fleet.prototype.populate = function() {
                 for (var i = 0; i < this.numShips; i++) {
                     // loop over the ship types when numShips > Constants.AVAILABLE_SHIPS.length
-                    var j = i % CONST.AVAILABLE_SHIPS.length;
-                    this.fleetRoster.push(new Ship(CONST.AVAILABLE_SHIPS[j], this.playerGrid, this.player));
+                    var j = i % config.AVAILABLE_SHIPS.length;
+                    this.fleetRoster.push(new Ship(config.AVAILABLE_SHIPS[j], this.playerGrid, this.player));
                 }
             };
 // Places the ship and returns whether or not the placement was successful
@@ -670,7 +642,7 @@ angular.module('BattleShip')
                     var illegalPlacement = true;
 
                     // Prevents the random placement of already placed ships
-                    if(this.player === CONST.HUMAN_PLAYER && Game.usedShips[i] === CONST.USED) {
+                    if(this.player === config.HUMAN_PLAYER && Game.usedShips[i] === config.USED) {
                         continue;
                     }
                     while (illegalPlacement) {
@@ -686,10 +658,10 @@ angular.module('BattleShip')
                             continue;
                         }
                     }
-                    if (this.player === CONST.HUMAN_PLAYER && Game.usedShips[i] !== CONST.USED) {
+                    if (this.player === config.HUMAN_PLAYER && Game.usedShips[i] !== config.USED) {
                         for (var j = 0; j < shipCoords.length; j++) {
                             this.playerGrid.updateCell(shipCoords[j].x, shipCoords[j].y, 'ship', this.player);
-                            Game.usedShips[i] = CONST.USED;
+                            Game.usedShips[i] = config.USED;
                         }
                     }
                 }
@@ -753,19 +725,19 @@ angular.module('BattleShip')
                 this.player = player;
 
                 switch (this.type) {
-                    case CONST.AVAILABLE_SHIPS[0]:
+                    case config.AVAILABLE_SHIPS[0]:
                         this.shipLength = 5;
                         break;
-                    case CONST.AVAILABLE_SHIPS[1]:
+                    case config.AVAILABLE_SHIPS[1]:
                         this.shipLength = 4;
                         break;
-                    case CONST.AVAILABLE_SHIPS[2]:
+                    case config.AVAILABLE_SHIPS[2]:
                         this.shipLength = 3;
                         break;
-                    case CONST.AVAILABLE_SHIPS[3]:
+                    case config.AVAILABLE_SHIPS[3]:
                         this.shipLength = 3;
                         break;
-                    case CONST.AVAILABLE_SHIPS[4]:
+                    case config.AVAILABLE_SHIPS[4]:
                         this.shipLength = 2;
                         break;
                     default:
@@ -783,15 +755,15 @@ angular.module('BattleShip')
                     // ...then check to make sure it doesn't collide with another ship
                     for (var i = 0; i < this.shipLength; i++) {
                         if (direction === Ship.DIRECTION_VERTICAL) {
-                            if (this.playerGrid.cells[x + i][y] === CONST.TYPE_SHIP ||
-                                this.playerGrid.cells[x + i][y] === CONST.TYPE_MISS ||
-                                this.playerGrid.cells[x + i][y] === CONST.TYPE_SUNK) {
+                            if (this.playerGrid.cells[x + i][y] === config.TYPE_SHIP ||
+                                this.playerGrid.cells[x + i][y] === config.TYPE_MISS ||
+                                this.playerGrid.cells[x + i][y] === config.TYPE_SUNK) {
                                 return false;
                             }
                         } else {
-                            if (this.playerGrid.cells[x][y + i] === CONST.TYPE_SHIP ||
-                                this.playerGrid.cells[x][y + i] === CONST.TYPE_MISS ||
-                                this.playerGrid.cells[x][y + i] === CONST.TYPE_SUNK) {
+                            if (this.playerGrid.cells[x][y + i] === config.TYPE_SHIP ||
+                                this.playerGrid.cells[x][y + i] === config.TYPE_MISS ||
+                                this.playerGrid.cells[x][y + i] === config.TYPE_SUNK) {
                                 return false;
                             }
                         }
@@ -871,9 +843,9 @@ angular.module('BattleShip')
                 if (!virtual) {
                     for (var i = 0; i < this.shipLength; i++) {
                         if (this.direction === Ship.DIRECTION_VERTICAL) {
-                            this.playerGrid.cells[x + i][y] = CONST.TYPE_SHIP;
+                            this.playerGrid.cells[x + i][y] = config.TYPE_SHIP;
                         } else {
-                            this.playerGrid.cells[x][y + i] = CONST.TYPE_SHIP;
+                            this.playerGrid.cells[x][y + i] = config.TYPE_SHIP;
                         }
                     }
                 }
@@ -945,7 +917,7 @@ angular.module('BattleShip')
             function AI(gameObject) {
                 this.gameObject = gameObject;
                 this.virtualGrid = new Grid(Game.size);
-                this.virtualFleet = new Fleet(this.virtualGrid, CONST.VIRTUAL_PLAYER);
+                this.virtualFleet = new Fleet(this.virtualGrid, config.VIRTUAL_PLAYER);
 
                 this.probGrid = []; // Probability Grid
                 this.initProbs();
@@ -1015,7 +987,7 @@ angular.module('BattleShip')
                     maxProbs[Math.floor(Math.random() * maxProbs.length)] :
                     maxProbs[0];
 
-                var result = this.gameObject.shoot(maxProbCoords.x, maxProbCoords.y, CONST.HUMAN_PLAYER);
+                var result = this.gameObject.shoot(maxProbCoords.x, maxProbCoords.y, config.HUMAN_PLAYER);
 
                 // If the game ends, the next lines need to be skipped.
                 if (Game.gameOver) {
@@ -1026,7 +998,7 @@ angular.module('BattleShip')
                 this.virtualGrid.cells[maxProbCoords.x][maxProbCoords.y] = result;
 
                 // If you hit a ship, check to make sure if you've sunk it.
-                if (result === CONST.TYPE_HIT) {
+                if (result === config.TYPE_HIT) {
                     var humanShip = this.findHumanShip(maxProbCoords.x, maxProbCoords.y);
                     if (humanShip.isSunk()) {
                         // Remove any ships from the roster that have been sunk
@@ -1040,7 +1012,7 @@ angular.module('BattleShip')
                         // Update the virtual grid with the sunk ship's cells
                         var shipCells = humanShip.getAllShipCells();
                         for (var _i = 0; _i < shipCells.length; _i++) {
-                            this.virtualGrid.cells[shipCells[_i].x][shipCells[_i].y] = CONST.TYPE_SUNK;
+                            this.virtualGrid.cells[shipCells[_i].x][shipCells[_i].y] = config.TYPE_SUNK;
                         }
                     }
                 }
@@ -1095,7 +1067,7 @@ angular.module('BattleShip')
 
                             // Set hit cells to probability zero so the AI doesn't
                             // target cells that are already hit
-                            if (this.virtualGrid.cells[x][y] === CONST.TYPE_HIT) {
+                            if (this.virtualGrid.cells[x][y] === config.TYPE_HIT) {
                                 this.probGrid[x][y] = 0;
                             }
                         }
@@ -1136,7 +1108,7 @@ angular.module('BattleShip')
 // Returns boolean
             AI.prototype.passesThroughHitCell = function(shipCells) {
                 for (var i = 0; i < shipCells.length; i++) {
-                    if (this.virtualGrid.cells[shipCells[i].x][shipCells[i].y] === CONST.TYPE_HIT) {
+                    if (this.virtualGrid.cells[shipCells[i].x][shipCells[i].y] === config.TYPE_HIT) {
                         return true;
                     }
                 }
@@ -1148,7 +1120,7 @@ angular.module('BattleShip')
             AI.prototype.numHitCellsCovered = function(shipCells) {
                 var cells = 0;
                 for (var i = 0; i < shipCells.length; i++) {
-                    if (this.virtualGrid.cells[shipCells[i].x][shipCells[i].y] === CONST.TYPE_HIT) {
+                    if (this.virtualGrid.cells[shipCells[i].x][shipCells[i].y] === config.TYPE_HIT) {
                         cells++;
                     }
                 }
