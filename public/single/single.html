@@ -2,7 +2,7 @@
     <div class="game-container">
         <div id="restart-sidebar" class="hidden">
             <h2>Опитай отново</h2>
-            <button id="restart-game">Рестартирай играта</button>
+            <button id="restart-game" ng-click="mainGame.restartGame($event)">Рестартирай играта</button>
         </div>
         <div id="roster-sidebar">
             <h2>Постави своите кораби</h2>
@@ -13,9 +13,9 @@
                 <li id="battleship">Боен кораб</li>
                 <li id="carrier">Самолетоносач</li>
             </ul>
-            <button id="rotate-button" data-direction="0">Завърти кораба</button>
-            <button id="start-game" class="hidden">Започни играта</button>
-            <button id="place-randomly" class="hidden">Постави на случаен принцип и започни играта</button>
+            <button id="rotate-button" ng-click="mainGame.toggleRotation($event)" data-direction="0">Завърти кораба</button>
+            <button id="start-game" ng-click="mainGame.startGame($event)" class="hidden">Започни играта</button>
+            <button id="place-randomly" ng-click="restartGame($event)" class="hidden">Постави на случаен принцип и започни играта</button>
         </div>
         <div id="stats-sidebar">
             <h3>Статистика</h3>
@@ -27,7 +27,7 @@
             <p><strong>Точност</strong></p>
 
             <p id="stats-accuracy">0%</p>
-            <button id="reset-stats">Рестартирайте статистиката</button>
+            <button id="reset-stats" ng-click="mainGame.resetStats($event)">Рестартирайте статистиката</button>
             <button id="prob-heatmap" class="hidden">Show Probability Heatmap</button>
         </div>
         <div class="grid-container">

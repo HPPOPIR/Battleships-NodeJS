@@ -64,7 +64,7 @@ angular.module('BattleShip')
             var stringifiedGrid = '';
             for (var x = 0; x < Game.size; x++) {
                 for (var y = 0; y < Game.size; y++) {
-                    stringifiedGrid += '(' + x + ',' + y + '):' + mainGame.humanGrid.cells[x][y] + ';\n';
+                    stringifiedGrid += '(' + x + ',' + y + '):' + $scope.mainGame.humanGrid.cells[x][y] + ';\n';
                 }
             }
 
@@ -404,9 +404,6 @@ angular.module('BattleShip')
             document.getElementById('roster-sidebar').removeAttribute('class');
             document.getElementById('rotate-button').removeAttribute('class');
             document.getElementById('start-game').setAttribute('class', 'hidden');
-//                if (DEBUG_MODE) {
-//                    document.getElementById('place-randomly').removeAttribute('class');
-//                }
         };
         Game.prototype.showRestartSidebar = function () {
             var sidebar = document.getElementById('restart-sidebar');
@@ -423,7 +420,7 @@ angular.module('BattleShip')
             }
 
             var restartButton = document.getElementById('restart-game');
-            restartButton.addEventListener('click', this.restartGame, false);
+//            restartButton.addEventListener('click', this.restartGame, false);
             restartButton.self = this;
         };
 // Generates the HTML divs for the grid for both players
@@ -488,12 +485,12 @@ angular.module('BattleShip')
             }
 
             var rotateButton = document.getElementById('rotate-button');
-            rotateButton.addEventListener('click', this.toggleRotation, false);
+//            rotateButton.addEventListener('click', this.toggleRotation, false);
             var startButton = document.getElementById('start-game');
             startButton.self = this;
-            startButton.addEventListener('click', this.startGame, false);
+//            startButton.addEventListener('click', this.startGame, false);
             var resetButton = document.getElementById('reset-stats');
-            resetButton.addEventListener('click', Game.stats.resetStats, false);
+//            resetButton.addEventListener('click', Game.stats.resetStats, false);
             this.computerFleet.placeShipsRandomly();
         };
 
@@ -1110,7 +1107,7 @@ angular.module('BattleShip')
 //        var gameTutorial = new Tutorial();
 
 // Start the game
-        var mainGame = new Game(10);
+        $scope.mainGame = new Game(10);
 
 
 // Browser compatability workaround for transition end event names.
