@@ -1,7 +1,7 @@
 angular.module('BattleShip', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-            .when('/single',{ templateUrl: 'public/main/single.html',
+            .when('/single',{ templateUrl: 'public/single/single.html',
             controller: 'SingleCtrl', reloadOnSearch: false})
             .when('/multi',{ templateUrl: 'public/multi/multi.html',
                 controller: 'MultiCtrl', reloadOnSearch: false})

@@ -2,8 +2,12 @@
  * Created by OPIR on 20.2.2015 г..
  */
 angular.module('BattleShip')
-    .controller('MainCtrl', function mainController($rootScope, $http) {
+    .controller('MainCtrl', function mainController($rootScope, $scope, $http, $location) {
         $rootScope.formData = 'main';
+
+        $scope.startSingleGame = function () {
+            $location.path('/single');
+        };
 
         // when landing on the page, get all todos and show them
 //    $http.get('/api/todos')
