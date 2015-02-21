@@ -164,7 +164,7 @@ button:active {
 .grid {
     position: relative;
     vertical-align: top;
-    padding: 5px;
+    /*padding: 5px;*/
     height: 420px;
     width: 420px;
     background-color: #25567B;
