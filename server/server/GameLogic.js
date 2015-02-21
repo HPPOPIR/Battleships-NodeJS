@@ -85,16 +85,17 @@ function addShips(coordinates, gridData) {
 
 function checkCell(coords, isFirstPlayer) {
     var gridData = isFirstPlayer ? secondGridData : mainGridData;
-
+    var result = false;
     _.each(gridData[coords.y], function (cell) {
         if(cell.x === coords.x && cell.isShip) {
             cell.state = stateEnum.hit;
-            return true;
+            result = true;
         } else if (cell.x === coords.x && !cell.isShip){
             cell.state = stateEnum.miss;
-            return false;
+            result = false;
         }
     });
+    return result;
 }
 
 module.exports.addShipToTable = function (req, res, next) {
